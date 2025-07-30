@@ -63,7 +63,7 @@ form.addEventListener('submit', async (e) => {
         if (res.ok) {
             showToast('Success! Redirecting...', 'success');
             setTimeout(() => {
-                window.location.href = '/main.html';
+                window.location.href = './frontend/main.html';
             }, 1500);
         } else {
             showToast(data.message || 'An error occurred', 'error');

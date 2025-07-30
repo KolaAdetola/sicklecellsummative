@@ -23,7 +23,7 @@ form.addEventListener('submit', async (e) => {
     const payload = { email, password };
 
     try {
-        const res = await fetch('http://localhost:3000/api/auth/login', {
+        const res = await fetch('https://sicklecellsummative.onrender.com/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

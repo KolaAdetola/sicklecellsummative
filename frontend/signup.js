@@ -47,8 +47,8 @@ form.addEventListener('submit', async (e) => {
           };
 
     const endpoint = isSignup
-        ? 'http://localhost:3000/api/auth/signup'
-        : 'http://localhost:3000/api/auth/login';
+        ? 'https://sicklecellsummative.onrender.com/api/auth/signup'
+        : 'https://sicklecellsummative.onrender.com/api/auth/login';
 
     try {
         const res = await fetch(endpoint, {

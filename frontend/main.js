@@ -22,7 +22,7 @@ document
     console.table("Submitting health data:", data);
 
     try {
-      const response = await fetch("http://localhost:3000/api/health/health-status", {
+      const response = await fetch("https://sicklecellsummative.onrender.com/api/health/health-status", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -68,7 +68,7 @@ document.getElementById("caretaker").addEventListener("submit", async function (
   };
 
   try {
-    const response = await fetch("http://localhost:3000/api/caretaker/add", {
+    const response = await fetch("https://sicklecellsummative.onrender.com/api/caretaker/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -151,7 +151,7 @@ async function findCaretaker() {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/api/caretaker/${sanitizedNumber}`);
+    const response = await fetch(`https://sicklecellsummative.onrender.com/api/caretaker/${sanitizedNumber}`);
     if (!response.ok) throw new Error("Caretaker not found.");
 
     const data = await response.json();
@@ -189,7 +189,7 @@ async function findCaretaker() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/pain/log", {
+      const response = await fetch("https://sicklecellsummative.onrender.com/api/pain/log", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

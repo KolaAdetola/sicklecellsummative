@@ -18,7 +18,7 @@ connectdb();
 
 
 app.use(cors({
-  origin: 'https://koladeade.github.io', // replace with your frontend's URL
+  origin: ['https://koladeade.github.io', 'http://127.0.0.1:5500'],
   credentials: true
 }));
 

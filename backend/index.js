@@ -18,7 +18,7 @@ connectdb();
 
 
 app.use(cors({
-  origin: 'https://koladeade.github.io/sicklecellsummative', // replace with your frontend's URL
+  origin: 'https://koladeade.github.io', // replace with your frontend's URL
   credentials: true
 }));
 

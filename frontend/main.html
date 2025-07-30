@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CrisisTrack</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="main.js" defer></script>
+</head>
+
+<body class="bg-gray-100">
+  <nav>
+    <ul class="sidebar">
+      <li onclick="hideSidebar()"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26px"
+            viewBox="0 -960 960 960" width="26px" fill="#b91c1c">
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </svg></a></li>
+      <li><a href="../Signup/signup.html">Signup</a></li>
+      <li><a href="../Signup/login.html">Login</a></li>
+      <li><a href="main.html">Home</a></li>
+      <li><a href="log-out.html">Logout</a></li>
+    </ul>
+    <ul>
+      <li class="logo">CrisisTrack</li>
+      <li class="hideOnMobile"><a href="signup.html">Signup</a></li>
+      <li class="hideOnMobile"><a href="login.html">Login</a></li>
+      <li class="hideOnMobile"><a href="main.html">Home</a></li>
+      <li class="hideOnMobile"><a href="log-out.html">Logout</a></li>
+      <li class="menu-button" onclick="showSidebar()">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px"
+            fill="#b91c1c">
+            <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+          </svg></a>
+      </li>
+      <!-- <div class="size-9 rounded-full bg-slate-400 mx-4 cursor-pointer ">
+        <img src="https://placehold.co/40x40" alt="User Avatar" class="w-full h-full object-cover rounded-full" /> -->
+
+      <!-- Profile Dropdown -->
+      <!-- <span class="flex border flex-col absolute top-14 right-0 h-auto bg-white w-[400px] shadow-lg shadow-gray-00 rounded-lg p-4 z-50"> -->
+
+      <!-- Header -->
+      <!-- <div class="flex flex-row gap-4 items-center">
+            <div class="size-[70px] rounded-full">
+              <img src="https://placehold.co/70x70" alt="User Avatar" class="w-full h-full object-cover rounded-full" />
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800">Kolade Adepoju</h3>
+              <p class="text-gray-600"><strong>Email:</strong> kolade@example.com</p>
+              <p class="text-gray-600"><strong>Phone:</strong> +234 803 123 4567</p>
+            </div>
+          </div>
+
+        </span> -->
+      <!-- </div> -->
+
+    </ul>
+  </nav>
+
+  <main>
+    <form class="pain-log bg-white p-6 rounded-2xl shadow-md" onsubmit="submitPainLog(event)">
+      <h2>Log Your Pain</h2>
+      <textarea id="description" class="triggers" placeholder="Describe your pain today..."></textarea>
+      <div class="w-full mb-5">
+        <input type="range" id="level" min="1" max="10" value="1" class="w-full" step="1" />
+        <!-- Tick marks and labels -->
+        <div class="flex justify-between px-2.5 mt-2 text-xs">
+          <span>|</span><span>|</span><span>|</span><span>|</span><span>|</span>
+          <span>|</span><span>|</span><span>|</span><span>|</span><span>|</span>
+        </div>
+        <div class="flex justify-between px-2.5 mt-2 text-xs">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+          <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        </div>
+      </div>
+      <button type="submit">Submit Pain Log</button>
+    </form>
+
+
+    <section class="reminders">
+      <h2>Reminders</h2>
+      <ul>
+        <li class="reminder-item">
+          Hydration <button onclick="toggleForm('hydration')">Set</button>
+        </li>
+        <li class="reminder-item">
+          Medication <button onclick="toggleForm('medication')">Set</button>
+        </li>
+        <li class="reminder-item">
+          Wellness Check-in
+          <button onclick="toggleForm('wellness')">Set</button>
+        </li>
+      </ul>
+
+      <div id="reminder-form-container" style="display: none">
+        <form class="reminder-form">
+          <label for="reminder-time">Date and Time</label>
+          <input type="datetime-local" id="reminder-time" required />
+
+          <label for="reminder-msg">Custom Message</label>
+          <input type="text" id="reminder-msg" placeholder="E.g., Take meds" required />
+
+          <label><input type="checkbox" id="repeat-daily" /> Repeat Daily</label>
+
+          <button type="button" onclick="setReminder()">Set Reminder</button>
+          <button type="button" onclick="clearReminders()">Clear All</button>
+          <button type="button" onclick="stopReminderSound()">
+            Stop Sound
+          </button>
+        </form>
+
+        <div id="sound-status" class="sound-status" style="display: none">
+          🔊 Reminder Sound Playing...
+        </div>
+      </div>
+
+      <div id="reminder-list"></div>
+      <audio id="reminder-sound" src="/audio/audioreminder.mp3" preload="auto"></audio>
+    </section>
+
+    <section class="panic">
+      <button id="panic-trigger" class="">
+        PANIC
+      </button>
+    </section>
+  </main>
+
+  <form id="caretaker">
+    <fieldset>
+      <h2 class="center">Caretaker Information</h2>
+      <p class="center">Fill out this form for your caretaker information</p>
+      <label for="Name" class="caretaker">Name:</label>
+      <input type="text" placeholder="Name (required)" id="Name" class="input-field"> <br>
+      <label for="phone" class="caretaker">Phone Number:</label>
+      <input type="tel" placeholder="Phone number(required)" id="phone" class="input-field"> <br>
+      <label for="email" class="caretaker">Email:</label>
+      <input type="email" placeholder="Email (required)" id="email" class="input-field" required> <br>
+      <label for="relative" class="caretaker">Relationship:</label>
+      <input type="text" placeholder="e.g Father, Mother, Guardian.." id="relative" class="input-field"><br>
+      <label for="patient" class="caretaker">Patient Name:</label>
+      <input type="text" placeholder="Patient Name" id="patientName" class="input-field"><br>
+    </fieldset>
+    <button class="submit-button">Save</button>
+    <button class="submit-button">Delete</button>
+  </form>
+
+  <form id="personal" class="personal-health  mx-auto p-6 bg-white rounded-2xl shadow-md space-y-6">
+    <h2 class="text-2xl font-semibold text-center text-gray-800">Personal Health Status</h2>
+
+    <!-- Triggers -->
+    <fieldset class="border border-gray-200 rounded-lg p-4">
+      <legend class="text-lg font-medium text-gray-700 mb-2">What triggers your crisis</legend>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <label class="flex items-center gap-3">
+          <input type="checkbox" name="crisisTriggers" value="Stress" class="checkbox checkbox-sm" />
+          <span>Stress</span>
+        </label>
+        <label class="flex items-center gap-3">
+          <input type="checkbox" name="crisisTriggers" value="Dehydration" class="checkbox checkbox-sm" />
+          <span>Dehydration</span>
+        </label>
+        <label class="flex items-center gap-3">
+          <input type="checkbox" name="crisisTriggers" value="Temperature Changes" class="checkbox checkbox-sm" />
+          <span>Temperature Changes</span>
+        </label>
+        <label class="flex items-center gap-3">
+          <input type="checkbox" name="crisisTriggers" value="Infections" class="checkbox checkbox-sm" />
+          <span>Infections</span>
+        </label>
+        <label class="flex items-center gap-3">
+          <input type="checkbox" name="crisisTriggers" value="Fatigue" class="checkbox checkbox-sm" />
+          <span>Fatigue</span>
+        </label>
+        <label class="flex items-center gap-3">
+          <input type="checkbox" name="crisisTriggers" value="Other" class="checkbox checkbox-sm" />
+          <span>Other</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- Sickle Cell Type -->
+    <fieldset class="border border-gray-200 rounded-lg p-4">
+      <legend class="text-lg font-medium text-gray-700 mb-2">Sickle Cell Type</legend>
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center gap-3">
+          <input type="radio" name="sickleType" value="SS" />
+          <span>SS</span>
+        </label>
+        <label class="flex items-center gap-3">
+          <input type="radio" name="sickleType" value="SC" />
+          <span>SC</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- Crisis Frequency -->
+    <fieldset class="border border-gray-200 rounded-lg p-4">
+      <legend class="text-lg font-medium text-gray-700 mb-2">How often do you get crisis</legend>
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center gap-3">
+          <input type="radio" name="frequency" value="Often" />
+          <span>Often (within 2-4 months)</span>
+        </label>
+        <label class="flex items-center gap-3">
+          <input type="radio" name="frequency" value="Sometimes" />
+          <span>Sometimes (within 5-12 months)</span>
+        </label>
+        <label class="flex items-center gap-3">
+          <input type="radio" name="frequency" value="Rarely" />
+          <span>Rarely (once a year)</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-4">
+      <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-2xl hover:bg-red-700 transition ">
+        Save
+      </button>
+      <button type="reset" class="bg-red-600 text-white px-6 py-2 rounded-2xl hover:bg-red-600 transition">
+        Delete
+      </button>
+    </div>
+  </form>
+
+  <div id="panic-modal"
+    class="fixed w-full h-screen top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-black/30 backdrop-blur-sm hidden items-center justify-center z-40">
+    <div
+      class="p-6 bg-white absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-xl shadow-xl space-y-6 w-full max-w-md ">
+      <button onclick="closePanicModal()"
+        class="absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-lg hover:bg-gray-200 rounded-md px-1">✕</button>
+      <h2 class="text-xl font-semibold text-center">Enter Phone Number</h2>
+      <input type="tel" id="phone-query" class="w-full px-4 py-2 border rounded-lg"
+        placeholder="Enter caretaker's phone number" />
+      <button onclick="findCaretaker()" class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
+        Show Contact Info
+      </button>
+    </div>
+  </div>
+
+  <div id="caretaker-info"
+    class="caretaker-info-container fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 ease-out items-center justify-center backdrop-blur-sm bg-black/30 px-4">
+    <div
+      class="caretaker-info w-full max-w-2xl p-6 border-5 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl space-y-6 absolute">
+
+      <div
+        class="close-caretaker-info size-10 absolute top-4 right-4 rounded-md bg-slate-100 hover:bg-slate-200 flex items-center justify-center cursor-pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6L18 18M6 18L18 6" stroke="black" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </div>
+
+      <h3 class="text-2xl font-semibold text-gray-800 text-center">
+        Caretaker Information
+      </h3>
+
+      <div class="flex flex-col md:flex-row items-center gap-6">
+        <div class="caretaker-img w-[150px] h-[150px] overflow-hidden rounded-full shadow">
+          <img src="https://placehold.net/avatar.svg" alt="Caretaker Avatar" class="w-full h-full object-cover" />
+        </div>
+
+        <div class="caretaker-details flex-1 space-y-2">
+          <div class="text-gray-700 text-base">
+            <strong>Name:</strong>
+            <span id="caretaker-name" class="ml-2 text-gray-900">Kolawole</span>
+          </div>
+          <div class="text-gray-700 text-base">
+            <strong>Phone:</strong>
+            <span id="caretaker-phone" class="ml-2 text-gray-900">123-456-7890</span>
+          </div>
+          <div class="text-gray-700 text-base">
+            <strong>Email:</strong>
+            <span id="caretaker-email" class="ml-2 text-gray-900">kolawole@example.com</span>
+          </div>
+          <div class="text-gray-700 text-base">
+            <strong>Relationship:</strong>
+            <span id="caretaker-relationship" class="ml-2 text-gray-900">Brother</span>
+          </div>
+          <div class="text-gray-700 text-base">
+            <strong>Patient Name:</strong>
+            <span id="caretaker-patientName" class="ml-2 text-gray-900">John Doe</span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="w-full text-center bg-green-100 border border-green-300 text-green-800 py-3 px-4 rounded-xl shadow-sm">
+        <strong>Action:</strong> Call your caretaker now!
+      </div>
+      <div class="w-full text-center bg-blue-100 border border-blue-300 text-blue-800 py-3 px-4 rounded-xl shadow-sm">
+        <strong>Note:</strong> Ensure to keep your caretaker informed about your health status.
+      </div>
+
+
+    </div>
+  </div>
+
+  <section id="resources">
+    <h2>Educational Resources</h2>
+    <ul class="resource-link">
+      <li><a href="https://www.nhlbi.nih.gov/health/sickle-cell-disease" target="_blank">Understanding Sickle Cell</a>
+      </li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9175917/" target="_blank">Nutrition and Hydration for
+          SCD</a></li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1279994/" target="_blank">Managing Pain - Medical Guide</a>
+      </li>
+    </ul>
+    <div class=" flex  w-full  gap-4 ml-10 flex-row justify-center items-center">
+      <iframe width="300" height="200" src="https://www.youtube.com/embed/dJBmtPR_flg"
+        title="What is sickle-cell-disease" allowfullscreen></iframe>
+      <iframe width="300" height="200" src="https://www.youtube.com/embed/qK5H9fPkltc"
+        title="What you need to know about sickle-cell-disease" allowfullscreen></iframe>
+      <iframe width="300" height="200" src="https://www.youtube.com/embed/fIIJmg_1hv0"
+        title="Overview of sickle-cell-disease" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Kolade Adepoju. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function showSidebar() {
+      document.querySelector(".sidebar").style.display = "flex";
+    }
+
+    function hideSidebar() {
+      document.querySelector(".sidebar").style.display = "none";
+    }
+
+    const reminderList = document.getElementById("reminder-list");
+    const reminderSound = document.getElementById("reminder-sound");
+    const soundStatus = document.getElementById("sound-status");
+    const reminders = [];
+
+    function toggleForm(type) {
+      const formContainer = document.getElementById(
+        "reminder-form-container"
+      );
+      const msgInput = document.getElementById("reminder-msg");
+
+      if (type === "medication") {
+        msgInput.value = "Take Medication";
+      } else if (type === "hydration") {
+        msgInput.value = "Drink Water";
+      } else if (type === "wellness") {
+        msgInput.value = "Wellness Check";
+      }
+
+      formContainer.style.display =
+        formContainer.style.display === "none" ? "block" : "none";
+    }
+
+    function setReminder() {
+      const timeInput = document.getElementById("reminder-time").value;
+      const message = document.getElementById("reminder-msg").value;
+      const repeat = document.getElementById("repeat-daily").checked;
+
+      if (!timeInput || !message) {
+        alert("Please fill out all reminder fields.");
+        return;
+      }
+
+      const reminderTime = new Date(timeInput);
+      const now = new Date();
+
+      if (reminderTime <= now) {
+        alert("Please set a future time.");
+        return;
+      }
+
+      const reminder = { time: reminderTime, message, repeat };
+      reminders.push(reminder);
+      displayReminder(reminder, reminders.length - 1);
+    }
+
+    function displayReminder(reminder, index) {
+      const div = document.createElement("div");
+      div.className = "reminder-item";
+      div.dataset.index = index;
+
+      const text = document.createElement("span");
+      text.innerText = `${reminder.time.toLocaleString()} - ${reminder.message
+        }${reminder.repeat ? " (Daily)" : ""}`;
+
+      const delBtn = document.createElement("button");
+      delBtn.innerText = "Delete";
+      delBtn.className = "delete-btn";
+      delBtn.onclick = () => {
+        reminders.splice(index, 1);
+        div.remove();
+      };
+
+      div.appendChild(text);
+      div.appendChild(delBtn);
+      reminderList.appendChild(div);
+    }
+
+    function clearReminders() {
+      reminders.length = 0;
+      reminderList.innerHTML = "";
+    }
+
+    function stopReminderSound() {
+      reminderSound.pause();
+      reminderSound.currentTime = 0;
+      reminderSound.loop = false;
+      updateSoundStatus(false);
+    }
+
+    function updateSoundStatus(isPlaying) {
+      soundStatus.style.display = "block";
+      soundStatus.innerText = isPlaying
+        ? "🔊 Reminder Sound Playing..."
+        : "✅ Reminder Sound Stopped";
+      if (!isPlaying) {
+        setTimeout(() => (soundStatus.style.display = "none"), 2000);
+      }
+    }
+
+    function triggerNotification(message) {
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("🔔 Reminder", {
+          body: message,
+          icon: "https://cdn-icons-png.flaticon.com/512/1828/1828884.png",
+        });
+      }
+
+      reminderSound.play();
+      updateSoundStatus(true);
+      setTimeout(stopReminderSound, 30000);
+    }
+
+    setInterval(() => {
+      const now = new Date();
+      reminders.forEach((reminder, index) => {
+        const timeDiff = reminder.time - now;
+        if (timeDiff <= 60000 && timeDiff >= 0 && !reminder.alerted) {
+          setTimeout(() => {
+            triggerNotification(reminder.message);
+            reminderSound.loop = true;
+            reminderSound.play();
+            updateSoundStatus(true);
+            alert(`🔔 Reminder: ${reminder.message}`);
+            reminder.alerted = true;
+
+            if (reminder.repeat) {
+              reminder.time.setDate(reminder.time.getDate() + 1);
+              reminder.alerted = false;
+              displayReminder(reminder, index);
+            } else {
+              reminder.pendingRemoval = true;
+            }
+          }, timeDiff);
+        }
+      });
+    }, 15000);
+  </script>
+</body>
+
+</html>

@@ -43,7 +43,7 @@ form.addEventListener('submit', async (e) => {
             // localStorage.setItem('auth_token', token);
 
             setTimeout(() => {
-                window.location.href = './frontend/main.html';
+                window.location.href = '/main.html';
             }, 1500);
         } else {
             errorMessage.textContent = data.message || 'Invalid credentials';

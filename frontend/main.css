@@ -7,6 +7,10 @@ body > * {
   overflow-x: hidden;
 }
 
+h2{
+  font-weight: bold;
+}
+
 body {
     font-family: sans-serif;
     background-color: #fff5f5;

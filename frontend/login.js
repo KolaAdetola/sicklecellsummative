@@ -43,7 +43,7 @@ form.addEventListener('submit', async (e) => {
             // localStorage.setItem('auth_token', token);
 
             setTimeout(() => {
-                window.location.href = '/sicklecellsummative/frontend/main.html';
+                window.location.href = '/frontend/main.html';
             }, 1500);
         } else {
             errorMessage.textContent = data.message || 'Invalid credentials';
@@ -82,3 +82,4 @@ function getLoginFormErrors(email, password) {
         errorMessage.textContent = '';
     });
 });
+/sicklecellsummative/frontend/main.html

@@ -1,0 +1,144 @@
+body {
+  font-family: sans-serif;
+  background-color: #fff5f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  background-image: url('../images/backg.png');
+  min-height: 100vh;
+  background-size: cover;
+}
+
+nav{
+  background-color: white;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+nav ul{
+  width: auto;
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: auto;
+  margin: auto;
+}
+nav li{
+  height: 50px;
+}
+nav a{
+  height: 100%;
+  padding: 0 30px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: #b91c1c;
+}
+nav a:hover{
+  background-color: #f3f4f6;
+  color: #b91c1c;
+}
+nav li:first-child{
+  margin-right: auto;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #b91c1c;
+}
+.sidebar{
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 250px;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.sidebar li{
+  width: 100%;
+}
+.sidebar a{
+  width: 100%;
+}
+.menu-button{
+  display: none;
+  transition: transform 0.1s ease;
+}
+.menu-button:active{
+transform: scale(0.95);
+}
+.card-user,
+.card-header,
+.card{
+  background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.btn{
+  background-color: #b91c1c;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border-color: white 15px solid;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: transform 0.1s ease;
+}
+.btn:active{
+  transform: scale(0.95);
+}
+.btn-primary{
+  background-color: #b91c1c;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border-color: white 15px solid;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: transform 0.1s ease;
+}
+.btn-primary:active{
+  transform: scale(0.95);
+}
+.card-actions{
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+footer{
+  background: white;
+  padding: 0rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #b91c1c;
+  font: arial, sans-serif;
+  
+}
+html{
+  scroll-behavior: smooth;
+}

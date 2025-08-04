@@ -26,18 +26,18 @@ export const createForm = async (req, res) => {
 };
 
 // Get all forms for a user
-// export const getUserForms = async (req, res) => {
-//   try {
-//     const userId = req.user?._id || req.userId;
-//     const forms = await SickleCellForm.find({ user: userId }).sort({
-//       createdAt: -1,
-//     });
-//     res.status(200).json(forms);
-//   } catch (error) {
-//     console.error("Error fetching forms:", error);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// };
+export const getUserForms = async (req, res) => {
+  try {
+    const userId = req.user?._id || req.userId;
+    const forms = await SickleCellForm.find({ user: userId }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json(forms);
+  } catch (error) {
+    console.error("Error fetching forms:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
 
 // Get form by ID
 // export const getFormById = async (req, res) => {

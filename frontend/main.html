@@ -272,6 +272,7 @@
     </div>
   </div>
 
+
   <section id="resources" class="p-6 bg-white rounded-2xl shadow-md space-y-6">
     <h2>Educational Resources</h2>
     <ul class="resource-link">
@@ -298,7 +299,7 @@
     </div>
   </footer>
 
-  <script>
+ <script>
     function showSidebar() {
       document.querySelector(".sidebar").style.display = "flex";
     }
@@ -312,10 +313,21 @@
     const soundStatus = document.getElementById("sound-status");
     const reminders = [];
 
+    // ✅ Prime the audio on first user interaction (click or touch)
+    document.addEventListener("click", () => {
+      reminderSound.play().catch(() => {});
+      reminderSound.pause();
+      reminderSound.currentTime = 0;
+    }, { once: true });
+
+    document.addEventListener("touchstart", () => {
+      reminderSound.play().catch(() => {});
+      reminderSound.pause();
+      reminderSound.currentTime = 0;
+    }, { once: true });
+
     function toggleForm(type) {
-      const formContainer = document.getElementById(
-        "reminder-form-container"
-      );
+      const formContainer = document.getElementById("reminder-form-container");
       const msgInput = document.getElementById("reminder-msg");
 
       if (type === "medication") {
@@ -359,8 +371,7 @@
       div.dataset.index = index;
 
       const text = document.createElement("span");
-      text.innerText = `${reminder.time.toLocaleString()} - ${reminder.message
-        }${reminder.repeat ? " (Daily)" : ""}`;
+      text.innerText = `${reminder.time.toLocaleString()} - ${reminder.message}${reminder.repeat ? " (Daily)" : ""}`;
 
       const delBtn = document.createElement("button");
       delBtn.innerText = "Delete";
@@ -435,6 +446,7 @@
       });
     }, 15000);
   </script>
+
 </body>
 
 </html>

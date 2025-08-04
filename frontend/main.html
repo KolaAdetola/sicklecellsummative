@@ -42,171 +42,163 @@
     </ul>
   </nav>
 
-  <main>
-    <form class="pain-log bg-white p-6 rounded-2xl shadow-md" onsubmit="submitPainLog(event)">
-      <h2>Log Your Pain</h2>
-      <textarea id="description" class="triggers" placeholder="Describe your pain today..."></textarea>
-      <div class="w-full mb-5">
-        <input type="range" id="level" min="1" max="10" value="1" class="w-full" step="1" />
-        <!-- Tick marks and labels -->
-        <div class="flex justify-between px-2.5 mt-2 text-xs">
-          <span>|</span><span>|</span><span>|</span><span>|</span><span>|</span>
-          <span>|</span><span>|</span><span>|</span><span>|</span><span>|</span>
+  <main class="w-full max-w-6xl mx-auto p-6 space-y-8 ">
+    <div class="flex flex-col md:flex-row  justify-between gap-6">
+      <form class="pain-log  p-6 rounded-2xl w-full  shadow-md bg-white " onsubmit="submitPainLog(event)">
+        <h2>Log Your Pain</h2>
+        <textarea id="description" class="triggers" placeholder="Describe your pain today..."></textarea>
+        <div class="w-full mb-5">
+          <input type="range" id="level" min="1" max="10" value="1" class="w-full" step="1" />
+          <!-- Tick marks and labels -->
+          <div class="flex justify-between px-2.5 mt-2 text-xs">
+            <span>|</span><span>|</span><span>|</span><span>|</span><span>|</span>
+            <span>|</span><span>|</span><span>|</span><span>|</span><span>|</span>
+          </div>
+          <div class="flex justify-between px-2.5 mt-2 text-xs">
+            <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+          </div>
         </div>
-        <div class="flex justify-between px-2.5 mt-2 text-xs">
-          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-          <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        <button type="submit">Submit Pain Log</button>
+      </form>
+      <section class="remindes w-full h-full bg-white p-6 rounded-2xl shadow-md">
+        <h2>Reminders</h2>
+        <ul>
+          <li class="reminder-item ">
+            Hydration <button onclick="toggleForm('hydration')" class="px-3 py-1 bg-red-600 text-white rounded-lg mb-4">Set</button>
+          </li>
+          <li class="reminder-item">
+            Medication <button onclick="toggleForm('medication')" class="px-3 py-1 bg-red-600 text-white rounded-lg mb-4">Set</button>
+          </li>
+          <li class="reminder-item">
+            Wellness Check-in
+            <button onclick="toggleForm('wellness')" class="px-3 py-1 bg-red-600 text-white rounded-lg mb-4">Set</button>
+          </li>
+        </ul>
+        <div id="reminder-form-container" style="display: none">
+          <form class="reminder-form">
+            <label for="reminder-time">Date and Time</label>
+            <input type="datetime-local" id="reminder-time" required />
+            <label for="reminder-msg">Custom Message</label>
+            <input type="text" id="reminder-msg" placeholder="E.g., Take meds" required />
+            <label><input type="checkbox" id="repeat-daily" /> Repeat Daily</label>
+            <button type="button" onclick="setReminder()">Set Reminder</button>
+            <button type="button" onclick="clearReminders()">Clear All</button>
+            <button type="button" onclick="stopReminderSound()">
+              Stop Sound
+            </button>
+          </form>
+          <div id="sound-status" class="sound-status" style="display: none">
+            🔊 Reminder Sound Playing...
+          </div>
         </div>
-      </div>
-      <button type="submit">Submit Pain Log</button>
-    </form>
+        <div id="reminder-list"></div>
+        <audio id="reminder-sound" src="/audio/audioreminder.mp3" preload="auto"></audio>
+      </section>
+    </div>
 
-
-    <section class="reminders">
-      <h2>Reminders</h2>
-      <ul>
-        <li class="reminder-item">
-          Hydration <button onclick="toggleForm('hydration')">Set</button>
-        </li>
-        <li class="reminder-item">
-          Medication <button onclick="toggleForm('medication')">Set</button>
-        </li>
-        <li class="reminder-item">
-          Wellness Check-in
-          <button onclick="toggleForm('wellness')">Set</button>
-        </li>
-      </ul>
-
-      <div id="reminder-form-container" style="display: none">
-        <form class="reminder-form">
-          <label for="reminder-time">Date and Time</label>
-          <input type="datetime-local" id="reminder-time" required />
-
-          <label for="reminder-msg">Custom Message</label>
-          <input type="text" id="reminder-msg" placeholder="E.g., Take meds" required />
-
-          <label><input type="checkbox" id="repeat-daily" /> Repeat Daily</label>
-
-          <button type="button" onclick="setReminder()">Set Reminder</button>
-          <button type="button" onclick="clearReminders()">Clear All</button>
-          <button type="button" onclick="stopReminderSound()">
-            Stop Sound
-          </button>
-        </form>
-
-        <div id="sound-status" class="sound-status" style="display: none">
-          🔊 Reminder Sound Playing...
-        </div>
-      </div>
-
-      <div id="reminder-list"></div>
-      <audio id="reminder-sound" src="/audio/audioreminder.mp3" preload="auto"></audio>
-    </section>
-
-    <section class="panic">
-      <button id="panic-trigger" class="">
+    <section class="panic  mx-auto my-5 w-full ">
+      <button id="panic-trigger" class="mx-auto">
         PANIC
       </button>
     </section>
   </main>
-
-  <form id="caretaker">
-    <fieldset>
-      <h2 class="center">Caretaker Information</h2>
-      <p class="center">Fill out this form for your caretaker information</p>
-      <label for="Name" class="caretaker">Name:</label>
-      <input type="text" placeholder="Name (required)" id="Name" class="input-field"> <br>
-      <label for="phone" class="caretaker">Phone Number:</label>
-      <input type="tel" placeholder="Phone number(required)" id="phone" class="input-field"> <br>
-      <label for="email" class="caretaker">Email:</label>
-      <input type="email" placeholder="Email (required)" id="email" class="input-field" required> <br>
-      <label for="relative" class="caretaker">Relationship:</label>
-      <input type="text" placeholder="e.g Father, Mother, Guardian.." id="relative" class="input-field"><br>
-      <label for="patient" class="caretaker">Patient Name:</label>
-      <input type="text" placeholder="Patient Name" id="patientName" class="input-field"><br>
-    </fieldset>
-    <button class="submit-button">Save</button>
-    <button class="submit-button">Delete</button>
-  </form>
-
-  <form id="personal" class="personal-health  mx-auto p-6 bg-white rounded-2xl shadow-md space-y-6">
-    <h2 class="text-2xl font-semibold text-center text-gray-800">Personal Health Status</h2>
-
-    <!-- Triggers -->
-    <fieldset class="border border-gray-200 rounded-lg p-4">
-      <legend class="text-lg font-medium text-gray-700 mb-2">What triggers your crisis</legend>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <label class="flex items-center gap-3">
-          <input type="checkbox" name="crisisTriggers" value="Stress" class="checkbox checkbox-sm" />
-          <span>Stress</span>
-        </label>
-        <label class="flex items-center gap-3">
-          <input type="checkbox" name="crisisTriggers" value="Dehydration" class="checkbox checkbox-sm" />
-          <span>Dehydration</span>
-        </label>
-        <label class="flex items-center gap-3">
-          <input type="checkbox" name="crisisTriggers" value="Temperature Changes" class="checkbox checkbox-sm" />
-          <span>Temperature Changes</span>
-        </label>
-        <label class="flex items-center gap-3">
-          <input type="checkbox" name="crisisTriggers" value="Infections" class="checkbox checkbox-sm" />
-          <span>Infections</span>
-        </label>
-        <label class="flex items-center gap-3">
-          <input type="checkbox" name="crisisTriggers" value="Fatigue" class="checkbox checkbox-sm" />
-          <span>Fatigue</span>
-        </label>
-        <label class="flex items-center gap-3">
-          <input type="checkbox" name="crisisTriggers" value="Other" class="checkbox checkbox-sm" />
-          <span>Other</span>
-        </label>
+  <div
+    class="caretaker-form-container flex flex-col md:flex-row-reverse items-stretch justify-center p-4 md:p-6 gap-6 md:gap-10 rounded-2xl shadow-md">
+    <form id="caretaker" class="caretaker-form w-full h-full  bg-white p-6 rounded-2xl shadow-md space-y-6">
+      <fieldset>
+        <h2 class="center">Caretaker Information</h2>
+        <p class="center">Fill out this form for your caretaker information</p>
+        <label for="Name" class="caretaker">Name:</label>
+        <input type="text" placeholder="Name (required)" id="Name" class="input-field w-full sm:w-1/2"> <br>
+        <label for="phone" class="caretaker">Phone Number:</label>
+        <input type="tel" placeholder="Phone number(required)" id="phone" class="input-field w-full sm:w-1/2"> <br>
+        <label for="email" class="caretaker">Email:</label>
+        <input type="email" placeholder="Email (required)" id="email" class="input-field w-full sm:w-1/2" required> <br>
+        <label for="relative" class="caretaker">Relationship:</label>
+        <input type="text" placeholder="e.g Father, Mother, Guardian.." id="relative"
+          class="input-field w-full sm:w-1/2"><br>
+        <label for="patient" class="caretaker">Patient Name:</label>
+        <input type="text" placeholder="Patient Name" id="patientName" class="input-field w-full sm:w-1/2"><br>
+      </fieldset>
+      <button class="submit-button">Save</button>
+      <button class="submit-button">Delete</button>
+    </form>
+    <form id="personal" class="personal-health w-full  mx-auto p-6 bg-white rounded-2xl shadow-md space-y-6">
+      <h2 class="text-2xl font-semibold text-center text-gray-800">Personal Health Status</h2>
+      <!-- Triggers -->
+      <fieldset class="border border-gray-200 rounded-lg p-4">
+        <legend class="text-lg font-medium text-gray-700 mb-2">What triggers your crisis</legend>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <label class="flex items-center gap-3">
+            <input type="checkbox" name="crisisTriggers" value="Stress" class="checkbox checkbox-sm" />
+            <span>Stress</span>
+          </label>
+          <label class="flex items-center gap-3">
+            <input type="checkbox" name="crisisTriggers" value="Dehydration" class="checkbox checkbox-sm" />
+            <span>Dehydration</span>
+          </label>
+          <label class="flex items-center gap-3">
+            <input type="checkbox" name="crisisTriggers" value="Temperature Changes" class="checkbox checkbox-sm" />
+            <span>Temperature Changes</span>
+          </label>
+          <label class="flex items-center gap-3">
+            <input type="checkbox" name="crisisTriggers" value="Infections" class="checkbox checkbox-sm" />
+            <span>Infections</span>
+          </label>
+          <label class="flex items-center gap-3">
+            <input type="checkbox" name="crisisTriggers" value="Fatigue" class="checkbox checkbox-sm" />
+            <span>Fatigue</span>
+          </label>
+          <label class="flex items-center gap-3">
+            <input type="checkbox" name="crisisTriggers" value="Other" class="checkbox checkbox-sm" />
+            <span>Other</span>
+          </label>
+        </div>
+      </fieldset>
+      <!-- Sickle Cell Type -->
+      <fieldset class="border border-gray-200 rounded-lg p-4">
+        <legend class="text-lg font-medium text-gray-700 mb-2">Sickle Cell Type</legend>
+        <div class="flex flex-col gap-2">
+          <label class="flex items-center gap-3">
+            <input type="radio" name="sickleType" value="SS" />
+            <span>SS</span>
+          </label>
+          <label class="flex items-center gap-3">
+            <input type="radio" name="sickleType" value="SC" />
+            <span>SC</span>
+          </label>
+        </div>
+      </fieldset>
+      <!-- Crisis Frequency -->
+      <fieldset class="border border-gray-200 rounded-lg p-4">
+        <legend class="text-lg font-medium text-gray-700 mb-2">How often do you get crisis</legend>
+        <div class="flex flex-col gap-2">
+          <label class="flex items-center gap-3">
+            <input type="radio" name="frequency" value="Often" />
+            <span>Often (within 2-4 months)</span>
+          </label>
+          <label class="flex items-center gap-3">
+            <input type="radio" name="frequency" value="Sometimes" />
+            <span>Sometimes (within 5-12 months)</span>
+          </label>
+          <label class="flex items-center gap-3">
+            <input type="radio" name="frequency" value="Rarely" />
+            <span>Rarely (once a year)</span>
+          </label>
+        </div>
+      </fieldset>
+      <!-- Buttons -->
+      <div class="flex justify-end gap-4">
+        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-2xl hover:bg-red-700 transition ">
+          Save
+        </button>
+        <button type="reset" class="bg-red-600 text-white px-6 py-2 rounded-2xl hover:bg-red-600 transition">
+          Delete
+        </button>
       </div>
-    </fieldset>
-
-    <!-- Sickle Cell Type -->
-    <fieldset class="border border-gray-200 rounded-lg p-4">
-      <legend class="text-lg font-medium text-gray-700 mb-2">Sickle Cell Type</legend>
-      <div class="flex flex-col gap-2">
-        <label class="flex items-center gap-3">
-          <input type="radio" name="sickleType" value="SS" />
-          <span>SS</span>
-        </label>
-        <label class="flex items-center gap-3">
-          <input type="radio" name="sickleType" value="SC" />
-          <span>SC</span>
-        </label>
-      </div>
-    </fieldset>
-
-    <!-- Crisis Frequency -->
-    <fieldset class="border border-gray-200 rounded-lg p-4">
-      <legend class="text-lg font-medium text-gray-700 mb-2">How often do you get crisis</legend>
-      <div class="flex flex-col gap-2">
-        <label class="flex items-center gap-3">
-          <input type="radio" name="frequency" value="Often" />
-          <span>Often (within 2-4 months)</span>
-        </label>
-        <label class="flex items-center gap-3">
-          <input type="radio" name="frequency" value="Sometimes" />
-          <span>Sometimes (within 5-12 months)</span>
-        </label>
-        <label class="flex items-center gap-3">
-          <input type="radio" name="frequency" value="Rarely" />
-          <span>Rarely (once a year)</span>
-        </label>
-      </div>
-    </fieldset>
-
-    <!-- Buttons -->
-    <div class="flex justify-end gap-4">
-      <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-2xl hover:bg-red-700 transition ">
-        Save
-      </button>
-      <button type="reset" class="bg-red-600 text-white px-6 py-2 rounded-2xl hover:bg-red-600 transition">
-        Delete
-      </button>
-    </div>
-  </form>
+    </form>
+  </div>
 
   <div id="panic-modal"
     class="fixed w-full h-screen top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-black/30 backdrop-blur-sm hidden items-center justify-center z-40">
@@ -280,7 +272,7 @@
     </div>
   </div>
 
-  <section id="resources">
+  <section id="resources" class="p-6 bg-white rounded-2xl shadow-md space-y-6">
     <h2>Educational Resources</h2>
     <ul class="resource-link">
       <li><a href="https://www.nhlbi.nih.gov/health/sickle-cell-disease" target="_blank">Understanding Sickle Cell</a>
@@ -290,7 +282,7 @@
       <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1279994/" target="_blank">Managing Pain - Medical Guide</a>
       </li>
     </ul>
-    <div class=" flex  w-full  gap-4 ml-10 flex-row justify-center items-center">
+    <div class="flex flex-wrap gap-4 mx-auto justify-center">
       <iframe width="300" height="200" src="https://www.youtube.com/embed/dJBmtPR_flg"
         title="What is sickle-cell-disease" allowfullscreen></iframe>
       <iframe width="300" height="200" src="https://www.youtube.com/embed/qK5H9fPkltc"

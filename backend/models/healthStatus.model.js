@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 
 const SickleCellFormSchema = new mongoose.Schema({
-  crisisTriggers: {
-    type: [String],
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true
-  },
+  },  
   sickleCellType: {
     type: String,
     enum: ['SS', 'SC'],

@@ -47,8 +47,8 @@ form.addEventListener('submit', async (e) => {
           };
 
     const endpoint = isSignup
-        ? 'https://sicklecellsummative.onrender.com/api/auth/signup'
-        : 'https://sicklecellsummative.onrender.com/api/auth/login';
+        ? 'http://localhost:3000/api/auth/signup'
+        : 'http://localhost:3000/api/auth/login';
 
     try {
         const res = await fetch(endpoint, {
@@ -62,6 +62,7 @@ form.addEventListener('submit', async (e) => {
 
         if (res.ok) {
             showToast('Success! Redirecting...', 'success');
+            sessionStorage.setItem("user", JSON.stringify(data));
             setTimeout(() => {
                 window.location.href = './frontend/main.html';
             }, 1500);

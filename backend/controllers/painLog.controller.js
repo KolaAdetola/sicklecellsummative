@@ -16,5 +16,14 @@ const submitPainLog = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+const getPainLogs = async (req, res) => {
+    try {
+        const painLogs = await PainLog.find();
+        res.json(painLogs);
+    } catch (error) {
+        console.error("Error fetching pain logs:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
 
-export { submitPainLog };
+export { submitPainLog, getPainLogs };

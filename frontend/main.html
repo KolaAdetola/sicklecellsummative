@@ -29,14 +29,31 @@
       <li class="hideOnMobile"><a href="../index.html">Signup</a></li>
       <li class="hideOnMobile"><a href="login.html">Login</a></li>
       <li class="hideOnMobile"><a href="main.html">Home</a></li>
-      <li class="hideOnMobile"><a href="log-out.html">Logout</a></li>
+      <li class="hideOnMobile"><a href="log-out.html" onclick="logout()">Logout</a></li>
       <li class="menu-button" onclick="showSidebar()">
         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px"
             fill="#b91c1c">
             <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
           </svg></a>
       </li>
+      <li class="relative mx-4 flex items-center">
+        <!-- Profile icon (small circle) -->
+        <div id="profile-button" class="w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-300">
+          <img id="profile-avatar-small" src="https://via.placeholder.com/100" alt="Profile"
+            class="w-full h-full object-cover">
+        </div>
 
+        <!-- Dropdown content (initially hidden) -->
+        <div id="profile-dropdown" class="absolute right-0 mt-55 w-64 bg-white rounded-lg shadow-lg p-4 z-50 hidden">
+          <div class="flex flex-col items-center text-center">
+            <img id="profile-avatar" src="https://via.placeholder.com/100" alt="Profile Picture"
+              class="w-20 h-20 rounded-full mb-3 border-2 border-gray-300">
+            <p id="profile-name" class="text-sm text-gray-700 font-semibold"></p>
+            <p id="profile-email" class="text-xs text-gray-500 mb-2"></p>
+            <p id="profile-phone" class="text-xs text-gray-600"></p>
+          </div>
+        </div>
+      </li>
 
 
     </ul>
@@ -65,14 +82,17 @@
         <h2>Reminders</h2>
         <ul>
           <li class="reminder-item ">
-            Hydration <button onclick="toggleForm('hydration')" class="px-3 py-1 bg-red-600 text-white rounded-lg mb-4">Set</button>
+            Hydration <button onclick="toggleForm('hydration')"
+              class="px-3 py-1 bg-red-600 text-white rounded-lg mb-4">Set</button>
           </li>
           <li class="reminder-item">
-            Medication <button onclick="toggleForm('medication')" class="px-3 py-1 bg-red-600 text-white rounded-lg mb-4">Set</button>
+            Medication <button onclick="toggleForm('medication')"
+              class="px-3 py-1 bg-red-600 text-white rounded-lg mb-4">Set</button>
           </li>
           <li class="reminder-item">
             Wellness Check-in
-            <button onclick="toggleForm('wellness')" class="px-3 py-1 bg-red-600 text-white rounded-lg mb-4">Set</button>
+            <button onclick="toggleForm('wellness')"
+              class="px-3 py-1 bg-red-600 text-white rounded-lg mb-4">Set</button>
           </li>
         </ul>
         <div id="reminder-form-container" style="display: none">
@@ -299,7 +319,7 @@
     </div>
   </footer>
 
- <script>
+  <script>
     function showSidebar() {
       document.querySelector(".sidebar").style.display = "flex";
     }
@@ -315,13 +335,13 @@
 
     // ✅ Prime the audio on first user interaction (click or touch)
     document.addEventListener("click", () => {
-      reminderSound.play().catch(() => {});
+      reminderSound.play().catch(() => { });
       reminderSound.pause();
       reminderSound.currentTime = 0;
     }, { once: true });
 
     document.addEventListener("touchstart", () => {
-      reminderSound.play().catch(() => {});
+      reminderSound.play().catch(() => { });
       reminderSound.pause();
       reminderSound.currentTime = 0;
     }, { once: true });

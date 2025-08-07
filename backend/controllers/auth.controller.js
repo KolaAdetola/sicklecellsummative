@@ -40,6 +40,26 @@ const signup = async (req, res) => {
       return res.status(400).json({ message: "Email already exists." });
     }
 
+    // Function to split full name into first and last name
+    function splitFullName(fullName) {
+      const nameParts = fullName.trim().split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(" ");
+
+      return {
+        firstName,
+        lastName,
+      };
+    }
+    const { firstName, lastName } = splitFullName(fullName);
+    const color = ["1F6FCC", "175599", "103D73", "277ACC", "1B5A99", "5DB2FF", "85C6FF", "ADD9FF", "75BCFF", "A5D6FF"];
+    const randomColor= color[Math.floor(Math.random() * color.length)];
+    const fontColor=["A855FF", "C080FF", "D9AAFF", "B277FF", "D1B1FF","F0E4FA", "F8F1FD"]
+    const randomfontColor= fontColor[Math.floor(Math.random() * fontColor.length)];
+
+    const profilePicture = `https://avatar.iran.liara.run/username?username=${firstName}+${lastName}&background=${randomColor}&color=${randomfontColor}`;
+
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
@@ -47,6 +67,7 @@ const signup = async (req, res) => {
       email,
       phoneNumber,
       password: hashedPassword,
+      profilePicture
     });
 
     await newUser.save();
@@ -58,6 +79,7 @@ const signup = async (req, res) => {
       fullName: newUser.fullName,
       email: newUser.email,
       phoneNumber: newUser.phoneNumber,
+      profilePicture: newUser.profilePicture,
       message: "User registered successfully",
     });
   } catch (error) {
@@ -94,6 +116,7 @@ const login = async (req, res) => {
       fullName: user.fullName,
       email: user.email,
       phoneNumber: user.phoneNumber,
+      profilePicture: user.profilePicture,
       message: "Login successful",
     });
   } catch (error) {

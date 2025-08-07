@@ -7,9 +7,11 @@ document
 
     // Collect checkbox values
     const triggers = [];
-    form.querySelectorAll('input[name="crisisTriggers"]:checked').forEach((el) => {
-      triggers.push(el.value);
-    });
+    form
+      .querySelectorAll('input[name="crisisTriggers"]:checked')
+      .forEach((el) => {
+        triggers.push(el.value);
+      });
 
     const data = {
       crisisTriggers: triggers,
@@ -22,14 +24,17 @@ document
     console.table("Submitting health data:", data);
 
     try {
-      const response = await fetch("https://sicklecellsummative.onrender.com/api/health/health-status", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        credentials: "include", // ✅ Ensures cookie gets sent
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://sicklecellsummative.onrender.com/api/health/health-status",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // ✅ Ensures cookie gets sent
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         alert("Data saved successfully!");
@@ -44,55 +49,57 @@ document
     }
   });
 
+document
+  .getElementById("caretaker")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-document.getElementById("caretaker").addEventListener("submit", async function (e) {
-  e.preventDefault();
+    const name = document.getElementById("Name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const relationship = document.getElementById("relative").value.trim();
+    const patientName = document.getElementById("patientName").value.trim(); // Assuming this is a hidden input or similar
 
-  const name = document.getElementById("Name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const relationship = document.getElementById("relative").value.trim();
-  const patientName = document.getElementById("patientName").value.trim(); // Assuming this is a hidden input or similar
-
-  if (!name || !phone || !email || !relationship || !patientName) {
-    alert("Please fill in all required fields.");
-    return;
-  }
-
-  const data = {
-    name,
-    phone,
-    email,
-    relationship,
-    patientName // 🔁 Replace this with dynamic user name if available
-  };
-
-  try {
-    const response = await fetch("https://sicklecellsummative.onrender.com/api/caretaker/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "include",
-      body: JSON.stringify(data)
-    });
-
-    if (response.ok) {
-      alert("Caretaker information saved successfully!");
-      // Optional: clear form
-      e.target.reset();
-    } else {
-      const err = await response.json();
-      console.error("Server error:", err);
-      alert(err.message || "Failed to save caretaker.");
+    if (!name || !phone || !email || !relationship || !patientName) {
+      alert("Please fill in all required fields.");
+      return;
     }
-  } catch (err) {
-    console.error("Network error:", err);
-    alert("An error occurred. Please try again.");
-  }
-});
 
+    const data = {
+      name,
+      phone,
+      email,
+      relationship,
+      patientName, // 🔁 Replace this with dynamic user name if available
+    };
 
+    try {
+      const response = await fetch(
+        "https://sicklecellsummative.onrender.com/api/caretaker/add",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (response.ok) {
+        alert("Caretaker information saved successfully!");
+        // Optional: clear form
+        e.target.reset();
+      } else {
+        const err = await response.json();
+        console.error("Server error:", err);
+        alert(err.message || "Failed to save caretaker.");
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      alert("An error occurred. Please try again.");
+    }
+  });
 
 // const container = document.querySelector(".caretaker-info-container");
 // const openBtn = document.querySelector("#panic-btn");
@@ -114,9 +121,6 @@ document.getElementById("caretaker").addEventListener("submit", async function (
 //   }, 300); // match transition duration
 // });
 
-
-
-
 const panicTrigger = document.getElementById("panic-trigger");
 const panicModal = document.getElementById("panic-modal");
 const caretakerInfo = document.getElementById("caretaker-info");
@@ -135,10 +139,12 @@ function closePanicModal() {
 }
 
 // Close caretaker info panel
-document.querySelector(".close-caretaker-info").addEventListener("click", () => {
-  caretakerInfo.classList.add("hidden");
-  caretakerInfo.classList.remove("flex", "opacity-100");
-});
+document
+  .querySelector(".close-caretaker-info")
+  .addEventListener("click", () => {
+    caretakerInfo.classList.add("hidden");
+    caretakerInfo.classList.remove("flex", "opacity-100");
+  });
 
 // Fetch caretaker from backend API
 async function findCaretaker() {
@@ -151,67 +157,110 @@ async function findCaretaker() {
   }
 
   try {
-    const response = await fetch(`https://sicklecellsummative.onrender.com/api/caretaker/${sanitizedNumber}`);
+    const response = await fetch(
+      `https://sicklecellsummative.onrender.com/api/caretaker/${sanitizedNumber}`
+    );
     if (!response.ok) throw new Error("Caretaker not found.");
 
     const data = await response.json();
 
     // Inject data into UI
     document.getElementById("caretaker-name").textContent = data.name || "N/A";
-    document.getElementById("caretaker-phone").textContent = data.phone || "N/A";
-    document.getElementById("caretaker-email").textContent = data.email || "N/A";
-    document.getElementById("caretaker-relationship").textContent = data.relationship || "N/A";
-    document.getElementById("caretaker-patientName").textContent = data.patientName || "N/A";
-    document.querySelector(".caretaker-img img").src = data.avatar || "https://placehold.net/avatar.svg";
+    document.getElementById("caretaker-phone").textContent =
+      data.phone || "N/A";
+    document.getElementById("caretaker-email").textContent =
+      data.email || "N/A";
+    document.getElementById("caretaker-relationship").textContent =
+      data.relationship || "N/A";
+    document.getElementById("caretaker-patientName").textContent =
+      data.patientName || "N/A";
+    document.querySelector(".caretaker-img img").src =
+      data.avatar || "https://placehold.net/avatar.svg";
 
     // Show contact info
     panicModal.classList.add("hidden");
     caretakerInfo.classList.remove("hidden");
     caretakerInfo.classList.add("flex", "opacity-100");
-
   } catch (error) {
     alert("Caretaker not found or server error.");
     console.error(error);
   }
 }
 
- 
+async function submitPainLog(event) {
+  event.preventDefault(); // Prevent page reload
 
-  async function submitPainLog(event) {
-    event.preventDefault(); // Prevent page reload
+  const description = document.getElementById("description").value.trim();
+  const level = parseInt(document.getElementById("level").value);
 
-    const description = document.getElementById("description").value.trim();
-    const level = parseInt(document.getElementById("level").value);
+  if (!description) {
+    alert("Please describe your pain.");
+    return;
+  }
 
-    if (!description) {
-      alert("Please describe your pain.");
-      return;
-    }
-
-    try {
-      const response = await fetch("https://sicklecellsummative.onrender.com/api/pain/log", {
+  try {
+    const response = await fetch(
+      "https://sicklecellsummative.onrender.com/api/pain/log",
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ description, level }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        alert("Error: " + data.message);
-        return;
       }
+    );
 
-      const result = await response.json();
-      alert("Pain log submitted successfully!");
-
-      // Optionally clear the form
-      document.getElementById("description").value = "";
-      document.getElementById("level").value = 1;
-
-    } catch (err) {
-      console.error("Error submitting pain log:", err);
-      alert("Something went wrong while submitting your pain log.");
+    if (!response.ok) {
+      const data = await response.json();
+      alert("Error: " + data.message);
+      return;
     }
+
+    const result = await response.json();
+    alert("Pain log submitted successfully!");
+
+    // Optionally clear the form
+    document.getElementById("description").value = "";
+    document.getElementById("level").value = 1;
+  } catch (err) {
+    console.error("Error submitting pain log:", err);
+    alert("Something went wrong while submitting your pain log.");
+  }
+}
+const profileButton = document.getElementById("profile-button");
+const dropdown = document.getElementById("profile-dropdown");
+
+// Toggle dropdown visibility
+profileButton.addEventListener("click", async () => {
+  dropdown.classList.toggle("hidden");
+
+  // Fetch user data
+  
+});
+
+// Optionally: click outside to close dropdown
+document.addEventListener("click", function (e) {
+  if (!profileButton.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.add("hidden");
+  }
+});
+try {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    console.log(user);
+
+    // Populate dropdown with user data
+    document.getElementById("profile-name").textContent = user.fullName;
+    document.getElementById("profile-email").textContent = user.email;
+    document.getElementById("profile-phone").textContent = user.phoneNumber;
+    document.getElementById("profile-avatar").src = user.profilePicture;
+    document.getElementById("profile-avatar-small").src = user.profilePicture;
+    console.log(user.profilePic);
+    
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+  }
+
+  function logout() {
+    sessionStorage.removeItem("user" && "user_email");
+    window.location.href = "logout.html"; // Redirect to login page
   }

@@ -29,6 +29,16 @@ const addCareTaker = async (req, res) => {
     }
 };
 
+const getAllCareTakers = async (req, res) => {
+    try {
+        const careTakers = await CareTaker.find();
+        res.json(careTakers);
+    } catch (error) {
+        console.error('Error fetching caretakers:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 const getCareTaker = async (req, res) => {
     try {
         const careTaker = await CareTaker.findOne({ phone: req.params.phone });
@@ -44,4 +54,4 @@ const getCareTaker = async (req, res) => {
     }
 };
 
-export { addCareTaker, getCareTaker };
+export { addCareTaker, getCareTaker, getAllCareTakers };

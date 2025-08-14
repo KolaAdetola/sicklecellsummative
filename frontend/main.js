@@ -157,6 +157,7 @@ async function findCaretaker() {
   }
 
   try {
+    
     const response = await fetch(
       `https://sicklecellsummative.onrender.com/api/caretaker/${sanitizedNumber}`
     );

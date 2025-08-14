@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard — Sickle Cell Crisis Tracker</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="dashboard.js" defer></script>
+</head>
+
+<body>
+  <nav>
+    <ul class="sidebar">
+      <li onclick="hideSidebar()"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26px"
+            viewBox="0 -960 960 960" width="26px" fill="#b91c1c">
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </svg></a></li>
+      <li><a href="../index.html">Signup</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="main.html">Home</a></li>
+      <li><a href="log-out.html">Logout</a></li>
+    </ul>
+    <ul>
+      <li class="logo">CrisisTrack</li>
+      <li class="hideOnMobile"><a href="../index.html">Signup</a></li>
+      <li class="hideOnMobile"><a href="login.html">Login</a></li>
+      <li class="hideOnMobile"><a href="main.html">Home</a></li>
+      <li class="hideOnMobile"><a href="log-out.html">Logout</a></li>
+      <li class="menu-button" onclick="showSidebar()">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px"
+            fill="#b91c1c">
+            <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+          </svg></a>
+      </li>
+
+
+
+    </ul>
+  </nav>
+
+  <main class="container">
+    <!-- <section class="card-user">
+      <h2>Your Profile</h2>
+      <div class="user-row">
+        <img class="avatar" id="avatar" src="https://avatar.iran.liara.run/username?username=Kolawole+Adetola&background=FCFAFE&color=%23000" alt="Profile avatar">
+        <div class="user-info">
+          <div class="user-name" id="userName">Kolawole Adetola</div>
+          <div class="user-email" id="userEmail">kolawoleadetola630@gmail.com</div>
+          <div class="user-meta" id="userMeta">📞 08144329914</div>
+        </div>
+      </div>
+    </section> -->
+
+
+
+    <div class="card-header">
+      <h2>Recent Pain Logs</h2>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra" id="painLogTable">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Description</th>
+              <th>Level</th>
+              <th>Date Logged</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Initial example rows -->
+            <tr>
+              <th>1</th>
+              <td>Lower back stiffness after sitting</td>
+              <td><span class="badge badge-warning">5/10</span></td>
+              <td>2025-08-10</td>
+            </tr>
+            <tr>
+              <th>2</th>
+              <td>Headache (frontal)</td>
+              <td><span class="badge badge-error">8/10</span></td>
+              <td>2025-08-09</td>
+            </tr>
+            <tr>
+              <th>3</th>
+              <td>Mild knee soreness after walking</td>
+              <td><span class="badge badge-success">2/10</span></td>
+              <td>2025-08-08</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button id="viewAllPainLogs" class="btn" onclick="fetchPainLogs()">View All</button>
+    </div>
+
+
+    <section class="card">
+      <div class="card-header">
+        <h2>Caretaker Information</h2>
+        <div class="overflow-x-auto">
+          <table class="table table-zebra">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Relationship</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- row 1 -->
+              <tr>
+                <th>1</th>
+                <td>Cy Ganderton</td>
+                <td>Quality Control Specialist</td>
+                <td>Blue</td>
+                <td>koawoeladetola2gmail.com</td>
+              </tr>
+              <!-- row 2 -->
+              <tr>
+                <th>2</th>
+                <td>Hart Hagerty</td>
+                <td>Desktop Support Technician</td>
+                <td>Purple</td>
+                <td>koawoeladetola2gmail.com</td>
+              </tr>
+              <!-- row 3 -->
+              <tr>
+                <th>3</th>
+                <td>Brice Swyre</td>
+                <td>Tax Accountant</td>
+                <td>Red</td>
+                <td>koawoeladetola2gmail.com</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button id="manageCaretaker" class="btn">Manage</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>Personal health status</h2>
+        <div class="overflow-x-auto">
+          <table class="table table-zebra">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Job</th>
+                <th>Favorite Color</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- row 1 -->
+              <tr>
+                <th>1</th>
+                <td>Cy Ganderton</td>
+                <td>Quality Control Specialist</td>
+                <td>Blue</td>
+              </tr>
+              <!-- row 2 -->
+              <tr>
+                <th>2</th>
+                <td>Hart Hagerty</td>
+                <td>Desktop Support Technician</td>
+                <td>Purple</td>
+              </tr>
+              <!-- row 3 -->
+              <tr>
+                <th>3</th>
+                <td>Brice Swyre</td>
+                <td>Tax Accountant</td>
+                <td>Red</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button id="manageCaretaker" class="btn">Manage</button>
+      </div>
+    </section>
+
+    <div class="card-actions">
+      <a id="viewMainDetails" class="btn-primary" href="./frontend/main.html">View Full Details</a>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2025 Kolade Adepoju. All rights reserved.</p>
+      </div>
+    </footer>
+
+
+    <script>
+      function showSidebar() {
+        document.querySelector(".sidebar").style.display = "flex";
+      }
+
+      function hideSidebar() {
+        document.querySelector(".sidebar").style.display = "none";
+      }
+
+    </script>
+</body>
+
+</html>

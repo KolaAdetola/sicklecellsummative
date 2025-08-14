@@ -19,7 +19,7 @@ const painLogSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default:  new Date().toISOString().slice(0, 10) + ' ' + new Date().toLocaleTimeString()
     }
 });
 

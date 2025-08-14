@@ -76,7 +76,7 @@ transform: scale(0.95);
 }
 .card-user,
 .card-header,
-.card{
+.cad{
   background: white;
     padding: 1.5rem;
     border-radius: 1rem;
@@ -141,4 +141,62 @@ footer{
 }
 html{
   scroll-behavior: smooth;
+}
+
+
+.card-user {
+  max-width: 100%;
+  margin: 2 auto;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 20px;
+  /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); */
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+
+.card-user h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ececec;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #222;
+}
+
+.user-email {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.user-meta {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.3rem;
 }

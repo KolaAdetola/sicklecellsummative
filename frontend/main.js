@@ -157,7 +157,6 @@ async function findCaretaker() {
   }
 
   try {
-    
     const response = await fetch(
       `https://sicklecellsummative.onrender.com/api/caretaker/${sanitizedNumber}`
     );
@@ -236,7 +235,6 @@ profileButton.addEventListener("click", async () => {
   dropdown.classList.toggle("hidden");
 
   // Fetch user data
-  
 });
 
 // Optionally: click outside to close dropdown
@@ -246,22 +244,20 @@ document.addEventListener("click", function (e) {
   }
 });
 try {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    console.log(user);
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
-    // Populate dropdown with user data
-    document.getElementById("profile-name").textContent = user.fullName;
-    document.getElementById("profile-email").textContent = user.email;
-    document.getElementById("profile-phone").textContent = user.phoneNumber;
-    document.getElementById("profile-avatar").src = user.profilePicture;
-    document.getElementById("profile-avatar-small").src = user.profilePicture;
-    console.log(user.profilePic);
-    
-  } catch (error) {
-    console.error("Error fetching profile:", error);
-  }
+  // Populate dropdown with user data
+  document.getElementById("profile-name").textContent = user.fullName;
+  document.getElementById("profile-email").textContent = user.email;
+  document.getElementById("profile-phone").textContent = user.phoneNumber;
+  document.getElementById("profile-avatar").src = user.profilePicture;
+  document.getElementById("profile-avatar-small").src = user.profilePicture;
+} catch (error) {
+  console.error("Error fetching profile:", error);
+}
 
-  function logout() {
-    sessionStorage.removeItem("user" && "user_email");
-    window.location.href = "logout.html"; // Redirect to login page
-  }
+function logout() {
+  sessionStorage.removeItem("user" && "token");
+  window.location.href = "logout.html"; // Redirect to login page
+}
+

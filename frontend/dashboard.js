@@ -1,48 +1,58 @@
-async function fetchPainLogs() {
-  try {
-    // Get token from sessionStorage (or wherever you store it after login)
-    // const token = sessionStorage.getItem("authToken");
-    // if (!token) {
-    //   alert("You are not logged in.");
-    //   return;
-    // }
+// dashboard.js
 
-    const response = await fetch("http://localhost:3000/api/pain/logs", {
-      headers: {
+async function fetchPainLogs() {
+  const tableBody = document.querySelector("#painLogTable tbody");
+  tableBody.innerHTML = `<div class=" loader"></div>`;
+  const token = sessionStorage.getItem("token");
+  console.log("Fetching pain logs with token:", token);
+
+  try {
+    const response = await fetch("http://localhost:3000/api/pain/logs",{
+       headers: {
         "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"
       }
     });
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
 
-    if (!response.ok) throw new Error("Pain logs not found.");
+    const logs = await response.json();
 
-    const data = await response.json();
-    console.log("Fetched pain logs:", data);
+    if (!Array.isArray(logs) || logs.length === 0) {
+      tableBody.innerHTML = `<tr><td colspan="4">No logs found</td></tr>`;
+      return;
+    }
 
-    const tableBody = document.querySelector("#painLogTable tbody");
-    let startIndex = tableBody.rows.length + 1;
+    tableBody.innerHTML = ""; // clear loading row
 
-    data.forEach((log, i) => {
+    logs.forEach((log, index) => {
       const row = document.createElement("tr");
+
+      // Badge color based on pain level
+      let badgeClass = "badge-success"; // default (low pain)
+      if (log.level >= 7) {
+        badgeClass = "badge-error"; // high pain
+      } else if (log.level >= 4) {
+        badgeClass = "badge-warning"; // moderate pain
+      }
+
       row.innerHTML = `
-        <th>${startIndex + i}</th>
-        <td>${log.description}</td>
-        <td>${getLevelBadge(log.level)}</td>
-        <td>${log.date}</td>
+        <th>${index + 1}</th>
+        <td>${log.description || "N/A"}</td>
+        <td><span class="badge ${badgeClass}">${log.level}/10</span></td>
+        <td>${new Date(log.date || Date.now()).toISOString().split("T")[0]}</td>
       `;
+
       tableBody.appendChild(row);
     });
-
-    document.getElementById("viewAllPainLogs").disabled = true;
-
   } catch (error) {
-    console.log(error);
-    alert("Pain logs not found or server error.");
+    console.error("Failed to fetch pain logs:", error);
+    tableBody.innerHTML = `<tr><td colspan="4">Error loading logs</td></tr>`;
   }
 }
 
-function getLevelBadge(level) {
-  if (level >= 7) return `<span class="badge badge-error">${level}/10</span>`;
-  if (level >= 4) return `<span class="badge badge-warning">${level}/10</span>`;
-  return `<span class="badge badge-success">${level}/10</span>`;
-}
+// Optionally fetch logs when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  fetchPainLogs();
+});

@@ -109,7 +109,8 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password." });
     }
 
-    generateToken(res, user._id);
+    let token = generateToken(res, user._id);
+    console.log("Token generated for user :", user._id);
 
     return res.status(200).json({
       _id: user._id,
@@ -118,6 +119,7 @@ const login = async (req, res) => {
       phoneNumber: user.phoneNumber,
       profilePicture: user.profilePicture,
       message: "Login successful",
+      token: token,
     });
   } catch (error) {
     console.error("Login error:", error);
